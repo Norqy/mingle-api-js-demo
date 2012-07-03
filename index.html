@@ -40,6 +40,10 @@
             display: block;
           }
           
+          fieldset.prop_name_and_value input    {
+            display: inline;
+          }
+          
         </style>
     </head>
 
@@ -58,7 +62,7 @@
       </p>
     </div>
 
-      <div class="diagnostics">
+      <div id="mingle_response" class="diagnostics">
         <p class="error" id="error"/>
         <p id="result"/>
       </div>
@@ -66,33 +70,36 @@
       <form id="update_card_form" action="">
 
           <fieldset>
-              <label>
-                  Mingle Instance
-                  <input id="mingle_instance" type="text" size="64" value="http://localhost:4001"/>
-              </label>
-              <label>
-                  Project Identifier (same as in URL)
-                  <input id="project_identifier" type="text" size="32"/>
-              </label>
-              <label>
-                  Card Number
-                  <input id="card_number" type="text" size="24"/>
-              </label>
-              <label>
-                  Username <input id="api_username" type="text" value="admin"/>
-              </label>
-              <label>
-                  Password <input type="password" id="api_password"/>
-              </label>
+              <label for="mingle_instance">Mingle Instance</label>
+              <input id="mingle_instance" type="text" size="64" value="http://localhost:4001"/>
+              <label for="project_identifier">Project Identifier (same as in URL)</label>
+              <input id="project_identifier" type="text" size="32" value="osito"/>
+              <label for="card_number">Card Number</label>
+              <input id="card_number" type="text" size="24" value="1"/>
+              <label for="api_username">Username</label>
+              <input id="api_username" type="text" value="admin"/>
+              <label>Password</label>
+              <input type="password" id="api_password" value="p"/>
           </fieldset>
 
+          <fieldset class="prop_names_and_values">
+              <div class="pair">
+                <label>Property Name &amp; Value</label>
+                <input class="name" type="text" value="Status"/> = <input class="value" type="text"/>
+              </div>
+              <div class="pair">
+                <input class="name" type="text" value="Size"/> = <input class="value" type="text"/>
+              </div>
+          </fieldset>
+          
           <fieldset>
               <label>
                   Card Description<br/>
                   <textarea id="description" rows="15" cols="120">Your card description goes here.</textarea>
               </label>
-              <input type="submit" value="Update Card"/>
           </fieldset>
+          
+          <input type="submit" value="Update Card"/>
       </form>
   </body>
 
