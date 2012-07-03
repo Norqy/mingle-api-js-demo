@@ -33,9 +33,14 @@ $(document).ready(function() {
         });
     };
 
+    $("#mingle_instance").blur(function(e) {
+      $('#link_to_self').attr('href', $('#mingle_instance').val() + '/mingle-api-js-demo/index.html');
+    });
+
     $("#update_card_form").submit(function(e) {
-        var url = $("#api_url").val();
+        var url = $("#mingle_instance").val() + '/api/v2/projects/' + $("#project_identifier").val() + "/cards/" + $("#card_number").val() + ".xml";
         var desc = $("#description").val();
+
         var user = $("#api_username").val();
         var pass = $("#api_password").val();
 
@@ -58,12 +63,14 @@ $(document).ready(function() {
                 xhr.setRequestHeader("Authorization", auth_token(user, pass));
             },
             success: function(data) {
-                $("#result").text(data);
+                $("#error").text("");
+                $("#result").text("Response: " + data);
                 log('success!');
             },
             error: function(request, textStatus, errorThrown) {
-                var message = "Error updating card: " + textStatus + ", " + errorThrown;
-                $("#result").text(message);
+                var message = "Error updating card: " + errorThrown;
+                message += '<p>Note: ensure basic authentication is enabled (<a href="http://www.thoughtworks-studios.com/docs/mingle/current/help/configuring_mingle_authentication.html">instructions</a>)</p>';
+                $("#error").html(message);
                 log('Error!');
             }
         });

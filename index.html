@@ -5,75 +5,95 @@
         <script src="static/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="static/lib/jquery.base64.min.js" type="text/javascript"></script>
         <script src="static/sample.js" type="text/javascript"></script>
+        
+        <style type="text/css">
+          body {
+            padding: 10px;
+            font-family: sans-serif;
+          }
+          
+          .diagnostics {
+            padding: 10px;
+            font-weight: bold;
+            background: black;
+            color: GreenYellow;
+            font-family:monospace;
+          }
+          
+          .diagnostics .error {
+            color: OrangeRed;
+          }
+          
+          .diagnostics a {
+            color: white;
+          }
+          
+          .diagnostics a.visited {
+            color: gray;
+          }
+          
+          .notice {
+            font-style: italic;
+          }
+          
+          form label {
+            display: block;
+          }
+          
+        </style>
     </head>
 
-    <body>
-        <p>When using the Mingle API, the data sent should be in JSON format:</p>
+    <div class="notice">
+      <p>
+          <strong>
+              Because of JavaScript security restrictions enforced by some browsers, this page
+              needs to be served by a Mingle instance or a webserver so that the host and port are the same as
+              the Mingle instance.  
+          </strong>
+      </p>
+      
+      <p>
+        You can do this easily in a development environment by moving this git repo
+        to the MINGLE_DIR/public folder.  It can then be accessed <a id="link_to_self" href="http://localhost:4001/mingle-api-js-demo/index.html">here</a>.
+      </p>
+    </div>
 
-        <pre>
-{
-    card: {
-        description: "Your description"
-    }
-}
-        </pre>
-        <p>
-            The response is given as XML. View the source of <a href="static/sample.js">static/sample.js</a> for a
-            working example.
-        </p>
+      <div class="diagnostics">
+        <p class="error" id="error"/>
+        <p id="result"/>
+      </div>
 
-        <h4>Update Card</h4>
+      <form id="update_card_form" action="">
 
-        <p>
-            Use this form to test out the card API. Ensure that the connection parameters (URL, Username, Password) are
-            correct.
-        </p>
+          <fieldset>
+              <label>
+                  Mingle Instance
+                  <input id="mingle_instance" type="text" size="64" value="http://localhost:4001"/>
+              </label>
+              <label>
+                  Project Identifier (same as in URL)
+                  <input id="project_identifier" type="text" size="32"/>
+              </label>
+              <label>
+                  Card Number
+                  <input id="card_number" type="text" size="24"/>
+              </label>
+              <label>
+                  Username <input id="api_username" type="text" value="admin"/>
+              </label>
+              <label>
+                  Password <input type="password" id="api_password"/>
+              </label>
+          </fieldset>
 
-        <p>
-            Also ensure that basic authentication is enabled in <strong>auth_config.yml</strong>.
-        </p>
-
-        <form id="update_card_form" action="">
-
-            <fieldset>
-                <p>
-                    <strong>
-                        Caveat: Because of JavaScript security restrictions enforced by some browsers, this page
-                        needs to be served by a Mingle instance or a webserver so that the host and port are the same as
-                        the Mingle instance.
-                    </strong>
-                </p>
-
-                <p>
-                    Replace <strong>"your_project_identifier"</strong> in the URL with your project identifier, and
-                    <strong>"1.xml"</strong> with the card number to update. Make appropriate changes to username and
-                    password.
-                </p>
-
-                <label>
-                    API Card URL.
-                    <input id="api_url" type="text" size="80"
-                           value="http://localhost:8080/api/v2/projects/your_project_identifier/cards/1.xml"/>
-                </label>
-                <label>
-                    Username <input id="api_username" type="text" value="admin"/>
-                </label>
-                <label>
-                    Password <input id="api_password" type="text" value="p"/>
-                </label>
-            </fieldset>
-
-            <fieldset>
-                <label>
-                    Card Description<br/>
-                    <textarea id="description" rows="15" cols="120">Your card description goes here.</textarea>
-                </label>
-                <input type="submit" value="Update Card"/>
-            </fieldset>
-        </form>
-
-        <h4>XML response:</h4>
-        <pre id="result"></pre>
-    </body>
+          <fieldset>
+              <label>
+                  Card Description<br/>
+                  <textarea id="description" rows="15" cols="120">Your card description goes here.</textarea>
+              </label>
+              <input type="submit" value="Update Card"/>
+          </fieldset>
+      </form>
+  </body>
 
 </html>
