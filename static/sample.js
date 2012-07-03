@@ -10,6 +10,28 @@ $(document).ready(function() {
             console.log(message);
         }
     }
+    
+    function toUrlParams(json) {
+      var allProperties = new Array();
+      if (json.description) {
+        allProperties.push($.param({ 
+                            card: { 
+                                description: json.description
+                              }
+                          }));
+      }
+      allProperties.concat(json.properties.map(function(pair) { propertyUrlParamPair(pair[0], pair[1]); }));
+      return allProperties.join('&');
+    };
+    
+    function propertyUrlParamPair(name, value) {
+      return $.param({
+          card:
+           {
+            'properties[]': { name: name, value: value }
+           }
+        });
+    };
 
     $("#update_card_form").submit(function(e) {
         var url = $("#api_url").val();
@@ -19,15 +41,18 @@ $(document).ready(function() {
 
         $("#result").text("");
 
+        var postData = {
+          description: desc,
+          properties: [
+              ['Status', 'New'],
+              ['Size', '128']
+           ]
+        };
+
         $.ajax({
-            url: url,
+            url: url + "?" + toUrlParams(postData),
             // set this to XML if you want to manipulate XML - we use text just so we can display the contents
             dataType: 'text',
-            data: {
-                card: {
-                    description: desc
-                }
-            },
             type: 'PUT',
             beforeSend: function(xhr){
                 xhr.setRequestHeader("Authorization", auth_token(user, pass));
@@ -36,8 +61,8 @@ $(document).ready(function() {
                 $("#result").text(data);
                 log('success!');
             },
-            error: function(data) {
-                var message = "Error updating card with: \n  url: " + url + "\n  user: " + user + "\n  pass: " + pass;
+            error: function(request, textStatus, errorThrown) {
+                var message = "Error updating card: " + textStatus + ", " + errorThrown;
                 $("#result").text(message);
                 log('Error!');
             }
@@ -45,5 +70,5 @@ $(document).ready(function() {
 
         log("Submitted form.");
         return false;
-    })
+    });
 });
