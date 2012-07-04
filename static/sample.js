@@ -20,8 +20,12 @@ $(document).ready(function() {
         params.push("card[description]=" + $("#description").val());
       }
       $('.prop_names_and_values .pair').each(function(index, div) { 
-        params.push("card[properties][][name]=" + $(div).children('input.name').val());
-        params.push("card[properties][][value]="+ $(div).children('input.value').val());
+        var name = $(div).children('input.name').val();
+        var value = $(div).children('input.value').val();
+        if (name && value) {
+          params.push("card[properties][][name]=" + name);
+          params.push("card[properties][][value]="+ value);
+        }
       });
       return params.join("&");
     };
