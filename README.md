@@ -1,4 +1,5 @@
-= Mingle API Javascript Example
+Mingle API Javascript Example
+=============================
 
 This simple javascript page is an example of how to update a card using javascript + jQuery.
 
