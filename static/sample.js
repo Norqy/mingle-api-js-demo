@@ -30,9 +30,12 @@ $(document).ready(function() {
       return params.join("&");
     };
     
-    $("#mingle_instance").blur(function(e) {
+    function setSelfUrl(e) {
       $('#link_to_self').attr('href', $('#mingle_instance').val() + '/mingle-api-js-demo/index.html');
-    });
+    };
+    
+    setSelfUrl();
+    $("#mingle_instance").blur(setSelfUrl);
 
     $("#update_card_form").submit(function(e) {
         var url = $("#mingle_instance").val() + '/api/v2/projects/' + $("#project_identifier").val() + "/cards/" + $("#card_number").val() + ".xml";
