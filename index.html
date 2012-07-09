@@ -1,109 +1,117 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-    <head>
-        <title>Mingle Card API example</title>
-        <script src="static/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
-        <script src="static/lib/jquery.base64.min.js" type="text/javascript"></script>
-        <script src="static/sample.js" type="text/javascript"></script>
-        
-        <style type="text/css">
-          body {
+<head>
+    <title>Mingle Card API example</title>
+    <script src="static/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="static/lib/jquery.base64.min.js" type="text/javascript"></script>
+    <script src="static/sample.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        body {
             padding: 10px;
             font-family: sans-serif;
-          }
-          
-          .diagnostics {
+        }
+
+        .diagnostics {
             padding: 10px;
             font-weight: bold;
             background: black;
             color: GreenYellow;
-            font-family:monospace;
-          }
-          
-          .diagnostics .error {
+            font-family: monospace;
+        }
+
+        .diagnostics .error {
             color: OrangeRed;
-          }
-          
-          .diagnostics a {
+        }
+
+        .diagnostics a {
             color: white;
-          }
-          
-          .diagnostics a.visited {
+        }
+
+        .diagnostics a:visited {
             color: gray;
-          }
-          
-          .notice {
+        }
+
+        .notice {
             font-style: italic;
-          }
-          
-          form label {
+        }
+
+        form label {
             display: block;
-          }
-          
-          fieldset.prop_name_and_value input    {
+        }
+
+        fieldset.prop_name_and_value input {
             display: inline;
-          }
-          
-        </style>
-    </head>
+        }
 
-    <div class="notice">
-      <p>
-          <strong>
-              Because of JavaScript security restrictions enforced by some browsers, this page
-              needs to be served by a Mingle instance or a webserver so that the host and port are the same as
-              the Mingle instance.  
-          </strong>
-      </p>
-      
-      <p>
+    </style>
+</head>
+<body>
+
+<div class="notice">
+    <p>
+        <strong>
+            Because of JavaScript security restrictions enforced by some browsers, this page
+            needs to be served by a Mingle instance or a webserver so that the host and port are the same as
+            the Mingle instance.
+        </strong>
+    </p>
+
+    <p>
         You can do this easily in a development environment by moving this git repo
-        to the MINGLE_DIR/public folder.  It can then be accessed <a id="link_to_self" href="http://localhost:4001/mingle-api-js-demo/index.html">here</a>.
-      </p>
-    </div>
+        to the MINGLE_DIR/public folder. It can then be accessed
+        <a id="link_to_self" href="http://localhost:4001/mingle-api-js-demo/index.html">here</a>.
+    </p>
+</div>
 
-      <div id="mingle_response" class="diagnostics">
-        <p class="error" id="error"/>
-        <p id="result"/>
-      </div>
+<div id="mingle_response" class="diagnostics">
+    <p class="error" id="error"></p>
 
-      <form id="update_card_form" action="">
+    <pre id="result"></pre>
+</div>
 
-          <fieldset>
-              <label for="mingle_instance">Mingle Instance</label>
-              <input id="mingle_instance" type="text" size="64" value="http://localhost:8080"/>
-              <label for="project_identifier">Project Identifier (same as in URL)</label>
-              <input id="project_identifier" type="text" size="32"/>
-              <label for="card_number">Card Number</label>
-              <input id="card_number" type="text" size="24"/>
-              <label for="api_username">Username</label>
-              <input id="api_username" type="text" value="admin"/>
-              <label>Password</label>
-              <input type="password" id="api_password"/>
-          </fieldset>
+<form id="update_card_form" action="">
+    <fieldset>
+        <label for="mingle_instance">Mingle Instance</label>
+        <input id="mingle_instance" type="text" size="64" value="http://localhost:8080"/>
 
-          <fieldset class="prop_names_and_values">
-              <div class="pair">
-                <label>Property Name &amp; Value</label>
-                <input class="name" type="text" value="Status"/> = <input class="value" type="text"/>
-              </div>
-              <div class="pair">
-                <input class="name" type="text" value="Size"/> = <input class="value" type="text"/>
-              </div>
-              <div class="pair">
-                <input class="name" type="text" value=""/> = <input class="value" type="text"/>
-              </div>
-          </fieldset>
-          
-          <fieldset>
-              <label>
-                  Card Description<br/>
-                  <textarea id="description" rows="15" cols="120"></textarea>
-              </label>
-          </fieldset>
-          
-          <input type="submit" value="Update Card"/>
-      </form>
-  </body>
+        <label for="project_identifier">Project Identifier (same as in URL)</label>
+        <input id="project_identifier" type="text" size="32"/>
+
+        <label for="card_number">Card Number</label>
+        <input id="card_number" type="text" size="24"/>
+
+        <label for="api_username">Username</label>
+        <input id="api_username" type="text" value="admin"/>
+
+        <label for="api_password">Password</label>
+        <input type="password" id="api_password"/>
+    </fieldset>
+
+    <fieldset class="prop_names_and_values">
+        <label>Property Names &amp; Values</label>
+        <div class="pair">
+            <input class="name" type="text" value="Status"/> = <input class="value" type="text"/>
+        </div>
+        <div class="pair">
+            <input class="name" type="text" value="Size"/> = <input class="value" type="text"/>
+        </div>
+        <div class="pair">
+            <input class="name" type="text" value=""/> = <input class="value" type="text"/>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <label>
+            Card Description<br/>
+            <textarea id="description" rows="15" cols="120"></textarea>
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <input type="submit" value="Update Card"/>
+    </fieldset>
+</form>
+</body>
 
 </html>

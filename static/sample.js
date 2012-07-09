@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  
+
     $('#mingle_response').hide();
-  
+
     function auth_token(user, password) {
       var token = user + ':' + password;
       var hash = $.base64.encode(token);
@@ -13,13 +13,13 @@ $(document).ready(function() {
             console.log(message);
         }
     }
-    
+
     function urlParams() {
       var params = [];
       if ($("#description").val()) {
         params.push("card[description]=" + $("#description").val());
       }
-      $('.prop_names_and_values .pair').each(function(index, div) { 
+      $('.prop_names_and_values .pair').each(function(index, div) {
         var name = $(div).children('input.name').val();
         var value = $(div).children('input.value').val();
         if (name && value) {
@@ -28,16 +28,16 @@ $(document).ready(function() {
         }
       });
       return params.join("&");
-    };
-    
-    function setSelfUrl(e) {
+    }
+
+    function setSelfUrl() {
       $('#link_to_self').attr('href', $('#mingle_instance').val() + '/mingle-api-js-demo/index.html');
-    };
-    
+    }
+
     setSelfUrl();
     $("#mingle_instance").blur(setSelfUrl);
 
-    $("#update_card_form").submit(function(e) {
+    $("#update_card_form").submit(function() {
         var url = $("#mingle_instance").val() + '/api/v2/projects/' + $("#project_identifier").val() + "/cards/" + $("#card_number").val() + ".xml";
         var user = $("#api_username").val();
         var pass = $("#api_password").val();
@@ -54,7 +54,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 $("#error").text("");
-                $("#result").text("Response: " + data);
+                $("#result").text("Response:\n" + data);
                 log('success!');
                 $('#mingle_response').show();
             },
